@@ -9,6 +9,7 @@ No cloud. No tracking. Runs entirely on your machine.
 ---
 
 ## How It Works
+```
 MCP Servers (Python, stdio transport)
 ├── github/     → GraphQL contributions API
 ├── fitness/    → local workout log
@@ -21,6 +22,7 @@ FastAPI Backend
 ↓
 React TS Frontend
 └── minimal dashboard UI
+```
 
 ## Features
 
