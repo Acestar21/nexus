@@ -17,7 +17,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-FITNESS_LOG_PATH = Path(os.getenv("FITNESS_LOG_PATH", "./data/fitness.json"))
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+FITNESS_LOG_PATH = PROJECT_ROOT / os.getenv("FITNESS_LOG_PATH", "data/fitness.json")
 
 mcp = FastMCP("fitness")
 
@@ -32,7 +33,7 @@ def load_entries() -> list[WorkoutEntry]:
 
 def calculate_snapshot(entries: list[WorkoutEntry]) -> FitnessSnapshot:
     today = datetime.now(timezone.utc).date()
-    week_ago = today - timedelta(days=7)
+    week_start = today - timedelta(days=today.weekday())  # Monday of current week
 
     completed = {
         entry.date
@@ -40,12 +41,12 @@ def calculate_snapshot(entries: list[WorkoutEntry]) -> FitnessSnapshot:
         if entry.completed
     }
 
-    worked_out_today = str(today) in completed
-
     total_workouts_this_week = sum(
         1 for d in completed
-        if datetime.strptime(d, "%Y-%m-%d").date() >= week_ago
+        if datetime.strptime(d, "%Y-%m-%d").date() >= week_start
     )
+
+    worked_out_today = str(today) in completed
 
     streak = 0
     check_date = today

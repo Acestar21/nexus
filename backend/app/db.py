@@ -5,7 +5,7 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-DB_PATH = Path("./data/nexus.db")
+DB_PATH = Path(__file__).parent.parent.parent / "data" / "nexus.db"
 
 
 def get_connection() -> sqlite3.Connection:
