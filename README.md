@@ -97,6 +97,7 @@ Any language that speaks MCP protocol over stdio works.
 ---
 
 ## Project Structure
+```
 mcp_dashboard/
 ├── mcp-servers/        # MCP servers (one per data source)
 ├── backend/            # FastAPI + MCP client + Ollama
@@ -104,7 +105,7 @@ mcp_dashboard/
 ├── data/               # Local data (gitignored)
 ├── .env.example        # Config template
 └── Makefile            # One-command startup
-
+```
 ---
 
 ## Roadmap
