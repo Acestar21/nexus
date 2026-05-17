@@ -19,7 +19,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 LEETCODE_USERNAME = os.getenv("LEETCODE_USERNAME")
-LEETCODE_SESSION = os.getenv("LEETCODE_SESSION_COOKIE")
 GRAPHQL_URL = "https://leetcode.com/graphql"
 
 mcp = FastMCP("leetcode")
@@ -30,8 +29,6 @@ def get_headers() -> dict:
         "Referer": "https://leetcode.com",
         "User-Agent": "Mozilla/5.0"
     }
-    if LEETCODE_SESSION:
-        headers["Cookie"] = f"LEETCODE_SESSION={LEETCODE_SESSION}"
     return headers    
 
 async def fetch_user_stats(username: str) -> dict:

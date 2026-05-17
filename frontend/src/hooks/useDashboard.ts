@@ -2,12 +2,14 @@ import { useState, useCallback } from "react";
 import type { DashboardData } from "../types";
 
 const API_URL = "http://localhost:8000/api/dashboard/summary";
+const REFRESH_BRIEF_URL = "http://localhost:8000/api/dashboard/refresh-brief";
 
 interface UseDashboardReturn {
   data: DashboardData | null;
   loading: boolean;
   error: string | null;
   refresh: () => Promise<void>;
+  refreshBrief: () => Promise<void>;
 }
 
 export function useDashboard(): UseDashboardReturn {
@@ -30,5 +32,20 @@ export function useDashboard(): UseDashboardReturn {
     }
   }, []);
 
-  return { data, loading, error, refresh };
+  const refreshBrief = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(REFRESH_BRIEF_URL, { method: "POST" });
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+      const json = await res.json();
+      setData(json);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  return { data, loading, error, refresh, refreshBrief };
 }

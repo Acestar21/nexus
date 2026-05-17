@@ -5,7 +5,7 @@ import { Brief } from "./components/Brief";
 import { QuickActions } from "./components/QuickActions";
 
 function App() {
-  const { data, loading, error, refresh } = useDashboard();
+  const { data, loading, error, refresh, refreshBrief } = useDashboard();
 
   useEffect(() => {
     refresh();
@@ -92,7 +92,7 @@ function App() {
             </div>
           </div>
 
-          <QuickActions onRefresh={refresh} loading={loading} />
+          <QuickActions onRefresh={refresh} onRefreshBrief={refreshBrief} loading={loading} />
         </main>
       )}
     </div>

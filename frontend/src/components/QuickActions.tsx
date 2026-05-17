@@ -1,9 +1,10 @@
 interface QuickActionsProps {
   onRefresh: () => void;
+  onRefreshBrief: () => void;
   loading: boolean;
 }
 
-export function QuickActions({ onRefresh, loading }: QuickActionsProps) {
+export function QuickActions({ onRefresh, onRefreshBrief, loading }: QuickActionsProps) {
   const today = new Date().toISOString().split("T")[0];
 
   const logWorkout = async () => {
@@ -27,8 +28,11 @@ export function QuickActions({ onRefresh, loading }: QuickActionsProps) {
         <button className="action-btn" onClick={logWorkout}>
           LOG WORKOUT
         </button>
+        <button className="action-btn" onClick={onRefreshBrief} disabled={loading}>
+          REFRESH BRIEF
+        </button>
         <button className="action-btn action-btn--secondary" onClick={onRefresh} disabled={loading}>
-          {loading ? "LOADING..." : "REFRESH"}
+          {loading ? "LOADING..." : "REFRESH DATA"}
         </button>
       </div>
     </div>

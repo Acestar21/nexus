@@ -15,7 +15,6 @@ class Settings(BaseSettings):
 
     # LeetCode
     leetcode_username: str = Field(..., description="LeetCode username")
-    leetcode_session_cookie: str = Field(..., description="LeetCode session cookie")
 
     # Fitness
     fitness_log_path: str = Field(default="./data/fitness.json")

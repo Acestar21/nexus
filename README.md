@@ -79,7 +79,6 @@ Open `http://localhost:5173`
 | `GITHUB_TOKEN` | Yes | GitHub PAT (classic), `read:user` + `repo` scopes |
 | `GITHUB_USERNAME` | Yes | Your GitHub username |
 | `LEETCODE_USERNAME` | Yes | Your LeetCode username |
-| `LEETCODE_SESSION_COOKIE` | Yes | LeetCode session cookie from browser |
 | `FITNESS_LOG_PATH` | No | Path to fitness JSON (default: `data/fitness.json`) |
 | `OLLAMA_HOST` | No | Ollama host (default: `http://localhost:11434`) |
 | `OLLAMA_MODEL` | No | Ollama model (default: `qwen2.5:7b`) |
