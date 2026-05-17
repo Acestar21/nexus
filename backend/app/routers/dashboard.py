@@ -49,19 +49,21 @@ async def get_summary():
     try:
         github_data = await call_tool("github", "get_github_activity")
         fitness_data = await call_tool("fitness", "get_fitness_activity")
+        leetcode_data = await call_tool("leetcode", "get_leetcode_activity")
 
         save_snapshot("github", github_data)
         save_snapshot("fitness", fitness_data)
+        save_snapshot("leetcode", leetcode_data)
 
-        # use cached brief if already generated today
         brief = get_todays_brief()
         if not brief:
-            brief = await generate_brief(github_data, fitness_data)
+            brief = await generate_brief(github_data, fitness_data, leetcode_data)
             save_brief(brief)
 
         return {
             "github": github_data,
             "fitness": fitness_data,
+            "leetcode": leetcode_data,
             "brief": brief,
         }
     except Exception as e:
@@ -83,8 +85,9 @@ async def refresh_brief():
     try:
         github_data = await call_tool("github", "get_github_activity")
         fitness_data = await call_tool("fitness", "get_fitness_activity")
-        brief = await generate_brief(github_data, fitness_data)
+        leetcode_data = await call_tool("leetcode", "get_leetcode_activity")
+        brief = await generate_brief(github_data, fitness_data, leetcode_data)
         save_brief(brief)
-        return {"github": github_data, "fitness": fitness_data, "brief": brief}
+        return {"github": github_data, "fitness": fitness_data, "leetcode": leetcode_data, "brief": brief}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

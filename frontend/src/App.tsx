@@ -63,6 +63,32 @@ function App() {
                 accent={data.fitness.current_streak > 0}
               />
             </div>
+            <div className="section-label" style={{ marginTop: "16px" }}>// LEETCODE</div>
+            <div className="metrics-grid">
+              <MetricCard
+                label="LC TODAY"
+                value={data.leetcode.activity.problem_solved_today}
+                sub={`${data.leetcode.activity.problem_solved_this_week} this week`}
+                accent={data.leetcode.activity.problem_solved_today > 0}
+              />
+              <MetricCard
+                label="LC STREAK"
+                value={`${data.leetcode.activity.current_streak}d`}
+                sub={`max: ${data.leetcode.activity.max_streak}d`}
+                accent={data.leetcode.activity.current_streak > 0}
+              />
+              <MetricCard
+                label="TOTAL SOLVED"
+                value={data.leetcode.activity.total_problem_solved}
+                sub={`${data.leetcode.activity.total_active_days} active days`}
+              />
+              <MetricCard
+                label="LC THIS WEEK"
+                value={data.leetcode.activity.problem_solved_this_week}
+                sub="problems"
+                accent={data.leetcode.activity.problem_solved_this_week > 0}
+              />
+            </div>
           </div>
         </main>
       )}

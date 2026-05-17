@@ -24,3 +24,25 @@ export interface DashboardData {
   fitness: FitnessData;
   brief: string;
 }
+
+export interface LeetCodeActivity {
+  problem_solved_today: number;
+  problem_solved_this_week: number;
+  total_problem_solved: number;
+  current_streak: number;
+  max_streak: number;
+  total_active_days: number;
+}
+
+export interface LeetCodeData {
+  username: string;
+  captured_at: string;
+  activity: LeetCodeActivity;
+}
+
+export interface DashboardData {
+  github: GitHubData;
+  fitness: FitnessData;
+  leetcode: LeetCodeData;
+  brief: string;
+}
