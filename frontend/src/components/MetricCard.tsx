@@ -1,5 +1,3 @@
-// src/components/MetricCard.tsx
-
 interface MetricCardProps {
   label: string;
   value: string | number;

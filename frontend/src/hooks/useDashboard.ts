@@ -1,5 +1,3 @@
-// src/hooks/useDashboard.ts
-
 import { useState, useCallback } from "react";
 import type { DashboardData } from "../types";
 

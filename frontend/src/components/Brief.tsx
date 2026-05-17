@@ -1,5 +1,3 @@
-// src/components/Brief.tsx
-
 interface BriefProps {
   text: string;
 }

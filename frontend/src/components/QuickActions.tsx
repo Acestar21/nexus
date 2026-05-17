@@ -1,5 +1,3 @@
-// src/components/QuickActions.tsx
-
 interface QuickActionsProps {
   onRefresh: () => void;
   loading: boolean;

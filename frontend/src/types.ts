@@ -1,5 +1,3 @@
-// src/types.ts
-
 export interface CommitActivity {
   commits_today: number;
   commits_this_week: number;
