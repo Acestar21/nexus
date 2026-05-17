@@ -68,21 +68,21 @@ body {
 
 /* LAYOUT */
 .dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.metrics-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.metrics-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  flex: 1;
-}
-
-.dashboard-right {
-  display: flex;
-  flex-direction: column;
-}
-
-.dashboard-left {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
 }
 
 /* BRIEF */

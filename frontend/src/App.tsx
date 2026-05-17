@@ -32,15 +32,13 @@ function App() {
 
       {data && (
         <main className="dashboard">
-          <div className="dashboard-left">
-            <Brief text={data.brief} />
-            <QuickActions onRefresh={refresh} loading={loading} />
-          </div>
+          <Brief text={data.brief} />
 
-          <div className="dashboard-right">
-            <div className="metrics-grid">
+          <div className="metrics-section">
+            <span className="section-label">// GITHUB</span>
+            <div className="metrics-row">
               <MetricCard
-                label="GH COMMITS TODAY"
+                label="COMMITS TODAY"
                 value={data.github.activity.commits_today}
                 sub={`${data.github.activity.commits_this_week} this week`}
               />
@@ -50,23 +48,14 @@ function App() {
                 sub={`last: ${data.github.activity.last_commit_date ?? "—"}`}
                 accent={data.github.activity.current_streak > 0}
               />
-              <MetricCard
-                label="WORKOUT TODAY"
-                value={data.fitness.worked_out_today ? "DONE" : "PENDING"}
-                sub={`${data.fitness.total_workouts_this_week} this week`}
-                accent={data.fitness.worked_out_today}
-              />
-              <MetricCard
-                label="FITNESS STREAK"
-                value={`${data.fitness.current_streak}d`}
-                sub={`last: ${data.fitness.last_workout_date ?? "—"}`}
-                accent={data.fitness.current_streak > 0}
-              />
             </div>
-            <div className="section-label" style={{ marginTop: "16px" }}>// LEETCODE</div>
-            <div className="metrics-grid">
+          </div>
+
+          <div className="metrics-section">
+            <span className="section-label">// LEETCODE</span>
+            <div className="metrics-row">
               <MetricCard
-                label="LC TODAY"
+                label="SOLVED TODAY"
                 value={data.leetcode.activity.problem_solved_today}
                 sub={`${data.leetcode.activity.problem_solved_this_week} this week`}
                 accent={data.leetcode.activity.problem_solved_today > 0}
@@ -82,14 +71,28 @@ function App() {
                 value={data.leetcode.activity.total_problem_solved}
                 sub={`${data.leetcode.activity.total_active_days} active days`}
               />
+            </div>
+          </div>
+
+          <div className="metrics-section">
+            <span className="section-label">// FITNESS</span>
+            <div className="metrics-row">
               <MetricCard
-                label="LC THIS WEEK"
-                value={data.leetcode.activity.problem_solved_this_week}
-                sub="problems"
-                accent={data.leetcode.activity.problem_solved_this_week > 0}
+                label="WORKOUT TODAY"
+                value={data.fitness.worked_out_today ? "DONE" : "PENDING"}
+                sub={`${data.fitness.total_workouts_this_week} this week`}
+                accent={data.fitness.worked_out_today}
+              />
+              <MetricCard
+                label="FITNESS STREAK"
+                value={`${data.fitness.current_streak}d`}
+                sub={`last: ${data.fitness.last_workout_date ?? "—"}`}
+                accent={data.fitness.current_streak > 0}
               />
             </div>
           </div>
+
+          <QuickActions onRefresh={refresh} loading={loading} />
         </main>
       )}
     </div>
