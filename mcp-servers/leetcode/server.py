@@ -90,7 +90,7 @@ def calculate_activity(data: dict) -> LeetCodeActivity:
 
     # calculate current streak walking backwards from today
     current_streak = 0
-    check_date = today
+    check_date = today if today in active_dates else today - timedelta(days=1)
     while check_date in active_dates:
         current_streak += 1
         check_date -= timedelta(days=1)

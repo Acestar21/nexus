@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { DashboardData } from "../types";
 
 const API_URL = "http://localhost:8000/api/dashboard/summary";
@@ -16,6 +16,12 @@ export function useDashboard(): UseDashboardReturn {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!error) return;
+    const timer = setTimeout(() => setError(null), 5000);
+    return () => clearTimeout(timer);
+  }, [error]);
 
   const refresh = useCallback(async () => {
     setLoading(true);

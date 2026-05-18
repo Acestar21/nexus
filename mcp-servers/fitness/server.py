@@ -49,7 +49,7 @@ def calculate_snapshot(entries: list[WorkoutEntry]) -> FitnessSnapshot:
     worked_out_today = str(today) in completed
 
     streak = 0
-    check_date = today
+    check_date = today if str(today) in completed else today - timedelta(days=1)
     while str(check_date) in completed:
         streak += 1
         check_date -= timedelta(days=1)

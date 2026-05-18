@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     # Ollama
     ollama_host: str = Field(default="http://localhost:11434")
     ollama_model: str = Field(default="llama3.2")
+    enable_ai_brief: bool = Field(default=False)
 
     # Backend
     backend_port: int = Field(default=8000)

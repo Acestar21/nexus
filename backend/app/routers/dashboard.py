@@ -9,7 +9,7 @@ from app.ollama_client import generate_brief
 from app.db import get_connection
 from pydantic import BaseModel
 from datetime import datetime, timezone, date
-
+from app.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -44,32 +44,46 @@ def save_snapshot(source: str, data: dict) -> None:
         )
 
 
+async def safe_call_tool(server: str, tool: str) -> tuple[dict | None, str | None]:
+    try:
+        result = await call_tool(server, tool)
+        return result, None
+    except Exception as e:
+        logger.error(f"MCP server '{server}' failed: {e}")
+        return None, str(e)
+
+
 @router.get("/summary")
 async def get_summary():
-    try:
-        github_data = await call_tool("github", "get_github_activity")
-        fitness_data = await call_tool("fitness", "get_fitness_activity")
-        leetcode_data = await call_tool("leetcode", "get_leetcode_activity")
+    github_data, github_err = await safe_call_tool("github", "get_github_activity")
+    fitness_data, fitness_err = await safe_call_tool("fitness", "get_fitness_activity")
+    leetcode_data, leetcode_err = await safe_call_tool("leetcode", "get_leetcode_activity")
 
+    if github_data:
         save_snapshot("github", github_data)
+    if fitness_data:
         save_snapshot("fitness", fitness_data)
+    if leetcode_data:
         save_snapshot("leetcode", leetcode_data)
 
+    brief = None
+    if settings.enable_ai_brief and github_data and fitness_data and leetcode_data:
         brief = get_todays_brief()
         if not brief:
             brief = await generate_brief(github_data, fitness_data, leetcode_data)
             save_brief(brief)
 
-        return {
-            "github": github_data,
-            "fitness": fitness_data,
-            "leetcode": leetcode_data,
-            "brief": brief,
+    return {
+        "github": github_data,
+        "fitness": fitness_data,
+        "leetcode": leetcode_data,
+        "brief": brief,
+        "errors": {
+            "github": github_err,
+            "fitness": fitness_err,
+            "leetcode": leetcode_err,
         }
-    except Exception as e:
-        logger.error(f"Error generating summary: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
+    }
 @router.post("/log-workout")
 async def log_workout(payload: WorkoutLog):
     try:
@@ -82,6 +96,8 @@ async def log_workout(payload: WorkoutLog):
 
 @router.post("/refresh-brief")
 async def refresh_brief():
+    if not settings.enable_ai_brief:
+        raise HTTPException(status_code=400, detail="AI brief is disabled.")
     try:
         github_data = await call_tool("github", "get_github_activity")
         fitness_data = await call_tool("fitness", "get_fitness_activity")

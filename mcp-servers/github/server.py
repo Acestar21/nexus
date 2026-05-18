@@ -94,7 +94,7 @@ def calculate_activity(data: dict) -> CommitActivity:
             commits_this_week += count
 
     streak = 0
-    check_date = today
+    check_date = today if today in contribution_dates else today - timedelta(days=1)
     while check_date in contribution_dates:
         streak += 1
         check_date -= timedelta(days=1)

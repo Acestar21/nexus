@@ -20,9 +20,15 @@ export interface FitnessData {
 }
 
 export interface DashboardData {
-  github: GitHubData;
-  fitness: FitnessData;
-  brief: string;
+  github: GitHubData | null;
+  fitness: FitnessData | null;
+  leetcode: LeetCodeData | null;
+  brief: string | null;
+  errors: {
+    github: string | null;
+    fitness: string | null;
+    leetcode: string | null;
+  };
 }
 
 export interface LeetCodeActivity {
@@ -38,11 +44,4 @@ export interface LeetCodeData {
   username: string;
   captured_at: string;
   activity: LeetCodeActivity;
-}
-
-export interface DashboardData {
-  github: GitHubData;
-  fitness: FitnessData;
-  leetcode: LeetCodeData;
-  brief: string;
 }
