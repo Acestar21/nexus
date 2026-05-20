@@ -14,7 +14,8 @@ SERVERS_DIR = Path(__file__).parent.parent.parent / "mcp-servers"
 def get_server_params(server_name: str) ->StdioServerParameters:
     server_path = SERVERS_DIR / server_name / "server.py"
     if not server_path.exists():
-        raise FileNotFoundError(f"MCP server not found: {server_path}")
+        raise FileNotFoundError(f"""GitHub provider unavailable.\n
+                                    Remaining providers still operational.""")
     return StdioServerParameters(
         command="python",
         args=[str(server_path)],

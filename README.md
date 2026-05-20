@@ -1,122 +1,356 @@
-# Nexus — Personal Life Dashboard
+# NEXUS — Local-First Developer Intelligence Platform
 
-A self-hosted, open source personal command center powered by MCP servers and a local AI. Aggregates your GitHub activity, fitness logs, and daily goals into a single minimal dashboard with an AI-generated morning brief.
+NEXUS is a self-hosted developer telemetry dashboard powered by modular MCP providers and optional local AI summarization.
 
-No cloud. No tracking. Runs entirely on your machine.
+It aggregates activity streams from sources like GitHub, LeetCode, and fitness tracking into a focused operational view designed to reduce cognitive overhead and surface what actually matters.
+
+No cloud backend.  
+No telemetry.  
+No mandatory AI dependency.  
+Everything runs locally.
 
 ![Dashboard Preview](docs/preview.png)
 
 ---
 
-## How It Works
-```
-MCP Servers (Python, stdio transport)
-├── github/     → GraphQL contributions API
-├── fitness/    → local workout log
-└── leetcode/   → (coming soon)
-↓
-FastAPI Backend
-├── MCP stdio client
-├── SQLite (trend snapshots)
-└── Ollama (local AI brief)
-↓
-React TS Frontend
-└── minimal dashboard UI
-```
+# Philosophy
 
-## Features
+Most productivity tools increase cognitive load by turning your life into a wall of widgets, charts, and notifications.
 
-- Real GitHub contribution data via GraphQL (includes private repos)
-- Local fitness logging with streak tracking
-- AI morning brief generated from your actual data — not generic motivation
-- Brief cached per day — Ollama only runs once daily unless manually refreshed
-- Pluggable MCP server architecture — add your own data sources
-- Zero cloud dependencies — everything runs locally
+NEXUS takes the opposite approach:
+
+- Minimal operational UI
+- Contextual awareness over analytics clutter
+- Local-first execution
+- Modular provider architecture
+- Optional AI augmentation
+- Graceful degradation under failure
+
+The goal is not to track everything.
+
+The goal is to surface what matters.
 
 ---
 
-## Prerequisites
+# Architecture
+
+```text
+MCP Providers
+├── GitHub
+├── LeetCode
+└── Fitness
+        ↓
+
+FastAPI Aggregation Layer
+├── async provider orchestration
+├── reliability layer
+├── SQLite snapshot persistence
+└── optional Ollama summaries
+        ↓
+
+React Frontend
+├── operational dashboard
+├── provider sections
+└── adaptive metric rendering
+```
+
+---
+
+# Features
+
+## Developer Telemetry
+
+- GitHub contribution tracking via GraphQL
+- LeetCode streak and activity analysis
+- Local fitness/workout tracking
+- Historical snapshot persistence via SQLite
+
+---
+
+## AI Layer
+
+- Contextual AI-generated daily summaries
+- Local inference using Ollama
+- Daily summary caching
+- Manual refresh support
+- Fully optional AI integration
+
+NEXUS remains fully functional without Ollama enabled.
+
+---
+
+## Reliability
+
+- Provider isolation — one failing provider never crashes the dashboard
+- Graceful degradation during provider failures
+- Partial rendering support
+- Explicit operational error states
+- Trend-ready local persistence
+
+---
+
+## Extensibility
+
+- Modular MCP provider architecture
+- Independent provider execution via stdio transport
+- Language-agnostic provider support
+- Easy integration of new data sources
+
+---
+
+# Dashboard
+
+## Healthy State
+
+![Dashboard Healthy](docs/dashboard-healthy.png)
+
+---
+
+## Graceful Degradation
+
+Even when a provider fails, the dashboard continues rendering remaining providers safely.
+
+![Dashboard Degraded](docs/dashboard-degraded.png)
+
+---
+
+# Why MCP?
+
+NEXUS uses MCP providers to isolate data sources into independent modules communicating over stdio transport.
+
+This architecture allows:
+
+- Provider isolation
+- Safer local orchestration
+- Easier extensibility
+- Language-agnostic integrations
+- Graceful degradation between providers
+
+Each provider is independently runnable and testable.
+
+---
+
+# Local-First Design
+
+NEXUS is intentionally designed around ownership and local execution.
+
+There are:
+- no hosted accounts
+- no telemetry collection
+- no mandatory cloud inference
+- no centralized backend
+
+Your data stays on your machine.
+
+---
+
+# Optional AI Layer
+
+Ollama integration is completely optional.
+
+When enabled:
+- local LLMs generate contextual summaries from aggregated activity data
+- summaries are cached daily to avoid unnecessary inference
+
+When disabled:
+- NEXUS continues functioning as a lightweight operational dashboard
+
+AI enhances the platform but does not define it.
+
+---
+
+# Tech Stack
+
+## Backend
+- Python
+- FastAPI
+- SQLite
+- AsyncIO
+- Pydantic
+- MCP Protocol
+- GraphQL
+
+---
+
+## Frontend
+- React
+- TypeScript
+- Vite
+
+---
+
+## AI
+- Ollama
+- Local LLM inference
+
+---
+
+# Prerequisites
 
 - Python 3.11+
 - Node.js 18+
-- [Ollama](https://ollama.ai) running locally with a model pulled (`ollama pull qwen2.5`)
-- GitHub Personal Access Token (classic, `read:user` + `repo` scopes)
+- Ollama (optional)
+- GitHub Personal Access Token
 
 ---
 
-## Setup
+# Setup
 
-**1. Clone the repo**
+## 1. Clone Repository
+
 ```bash
-git clone https://github.com/yourusername/mcp_dashboard.git
-cd mcp_dashboard
+git clone https://github.com/yourusername/nexus.git
+cd nexus
 ```
 
-**2. Configure environment**
+---
+
+## 2. Configure Environment
+
 ```bash
 cp .env.example .env
 ```
-Fill in your values in `.env`.
 
-**3. Install dependencies**
+Fill in your environment variables.
+
+---
+
+## 3. Install Dependencies
+
 ```bash
 make install
 ```
 
-**4. Start the dashboard**
+---
+
+## 4. Start Development Environment
+
 ```bash
 make dev
 ```
 
-Open `http://localhost:5173`
+Frontend:
+```text
+http://localhost:5173
+```
+
+Backend:
+```text
+http://localhost:8000
+```
 
 ---
 
-## Environment Variables
+# Environment Variables
 
 | Variable | Required | Description |
 |---|---|---|
-| `GITHUB_TOKEN` | Yes | GitHub PAT (classic), `read:user` + `repo` scopes |
-| `GITHUB_USERNAME` | Yes | Your GitHub username |
-| `LEETCODE_USERNAME` | Yes | Your LeetCode username |
-| `FITNESS_LOG_PATH` | No | Path to fitness JSON (default: `data/fitness.json`) |
-| `OLLAMA_HOST` | No | Ollama host (default: `http://localhost:11434`) |
-| `OLLAMA_MODEL` | No | Ollama model (default: `qwen2.5:7b`) |
+| `GITHUB_TOKEN` | Yes | GitHub Personal Access Token |
+| `GITHUB_USERNAME` | Yes | GitHub username |
+| `LEETCODE_USERNAME` | Yes | LeetCode username |
+| `FITNESS_LOG_PATH` | No | Path to local fitness JSON |
+| `ENABLE_AI_BRIEF` | No | Enable Ollama AI summaries |
+| `OLLAMA_HOST` | No | Ollama host |
+| `OLLAMA_MODEL` | No | Ollama model name |
 
 ---
 
-## Adding Your Own MCP Server
+# Project Structure
 
-1. Create a folder in `mcp-servers/your-server/`
-2. Implement `server.py` using `FastMCP` with stdio transport
-3. Register it in `backend/app/routers/dashboard.py`
-
-Any language that speaks MCP protocol over stdio works.
-
----
-
-## Project Structure
+```text
+nexus/
+├── mcp-servers/
+│   ├── github/
+│   ├── leetcode/
+│   └── fitness/
+│
+├── backend/
+│   └── app/
+│       ├── config.py
+│       ├── db.py
+│       ├── mcp_client.py
+│       ├── ollama_client.py
+│       └── routers/
+│           └── dashboard.py
+│
+├── frontend/
+│   └── src/
+│
+├── data/
+├── Makefile
+├── README.md
+├── CONTRIBUTING.md
+└── .env.example
 ```
-mcp_dashboard/
-├── mcp-servers/        # MCP servers (one per data source)
-├── backend/            # FastAPI + MCP client + Ollama
-├── frontend/           # React TS dashboard
-├── data/               # Local data (gitignored)
-├── .env.example        # Config template
-└── Makefile            # One-command startup
+
+---
+
+# Adding Your Own Provider
+
+Adding a new data source typically means:
+- creating one MCP provider
+- registering it in the backend
+- rendering the metrics in the frontend
+
+See:
+```text
+CONTRIBUTING.md
 ```
----
 
-## Roadmap
-
-- [ ] LeetCode MCP server
-- [ ] Goals/habits tracking
-- [ ] Weekly trend charts
-- [ ] Docker Compose support
-- [ ] Plugin guide for third-party MCP servers
+for provider architecture and implementation details.
 
 ---
 
-## Stack
+# Design Principles
 
-Python · FastAPI · MCP Protocol · Ollama · React · TypeScript · SQLite
+NEXUS prioritizes:
+
+- Clarity over density
+- Reliability over complexity
+- Local-first ownership
+- Modular architecture
+- Operational awareness
+- Focused UX over dashboard clutter
+
+---
+
+# Roadmap
+
+## Near-Term
+- Historical trend analysis
+- Behavioral insight generation
+- Provider health states
+- Better onboarding flow
+- Plugin/provider templates
+
+---
+
+## Long-Term
+- Provider ecosystem
+- Longitudinal activity intelligence
+- Correlation analysis between providers
+- Local semantic memory/search
+- Community provider registry
+
+---
+
+# Contributing
+
+Contributions are welcome.
+
+Please read:
+```text
+CONTRIBUTING.md
+```
+
+before opening pull requests or proposing major architectural changes.
+
+---
+
+# License
+
+MIT License
+
+---
+
+Built and maintained by Kushal.
