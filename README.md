@@ -8,7 +8,7 @@ No cloud backend.
 No telemetry.  
 No mandatory AI dependency.  
 Everything runs locally.
-
+---
 ![Dashboard Preview](docs/preview.png)
 
 ---
@@ -102,7 +102,7 @@ NEXUS remains fully functional without Ollama enabled.
 
 ## Healthy State
 
-![Dashboard Healthy](docs/dashboard-healthy.png)
+![Dashboard Healthy](docs/dashboard_healthy.png)
 
 ---
 
@@ -110,7 +110,32 @@ NEXUS remains fully functional without Ollama enabled.
 
 Even when a provider fails, the dashboard continues rendering remaining providers safely.
 
-![Dashboard Degraded](docs/dashboard-degraded.png)
+![Dashboard Degraded](docs/dashboard_unhealthy.png)
+
+---
+## AI Brief Example
+
+NEXUS treats AI as an optional contextual intelligence layer rather than a motivational assistant.
+
+The briefing system is designed to generate concise operational summaries from aggregated developer telemetry using locally hosted LLMs via Ollama.
+
+The focus is:
+- behavioral signals
+- workload balance
+- streak awareness
+- operational context
+
+NOT:
+- generic productivity coaching
+- motivational advice
+- artificial positivity
+
+Example generated brief:
+
+![AI_BRIEF](docs/ai_brief.png)
+
+
+The AI layer is fully optional and runs entirely locally through Ollama.
 
 ---
 
@@ -199,7 +224,7 @@ AI enhances the platform but does not define it.
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/nexus.git
+git clone https://github.com/Acestar21/nexus.git
 cd nexus
 ```
 
@@ -259,28 +284,31 @@ http://localhost:8000
 
 ```text
 nexus/
+├── backend/
+│   └── app/
+│       ├── routers/
+│       │   └── dashboard.py
+│       ├── config.py
+│       ├── db.py
+│       ├── mcp_client.py
+│       └── ollama_client.py
+│
+├── frontend/
+│   └── src/
+│       ├── components/
+│       ├── hooks/
+│       ├── App.tsx
+│       └── types.ts
+│
 ├── mcp-servers/
 │   ├── github/
 │   ├── leetcode/
 │   └── fitness/
 │
-├── backend/
-│   └── app/
-│       ├── config.py
-│       ├── db.py
-│       ├── mcp_client.py
-│       ├── ollama_client.py
-│       └── routers/
-│           └── dashboard.py
-│
-├── frontend/
-│   └── src/
-│
-├── data/
-├── Makefile
-├── README.md
+├── docs/
 ├── CONTRIBUTING.md
-└── .env.example
+├── README.md
+└── Makefile
 ```
 
 ---
@@ -314,25 +342,6 @@ NEXUS prioritizes:
 
 ---
 
-# Roadmap
-
-## Near-Term
-- Historical trend analysis
-- Behavioral insight generation
-- Provider health states
-- Better onboarding flow
-- Plugin/provider templates
-
----
-
-## Long-Term
-- Provider ecosystem
-- Longitudinal activity intelligence
-- Correlation analysis between providers
-- Local semantic memory/search
-- Community provider registry
-
----
 
 # Contributing
 
