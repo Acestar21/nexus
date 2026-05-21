@@ -371,9 +371,9 @@ NEXUS prioritizes:
 Contributions are welcome.
 
 Please read:
-```text
-CONTRIBUTING.md
-```
+
+[CONTRIBUTING.md](./CONTRIBUTING.md)
+
 
 before opening pull requests or proposing major architectural changes.
 
@@ -381,7 +381,7 @@ before opening pull requests or proposing major architectural changes.
 
 # License
 
-MIT License
+[MIT License](./LICENSE)
 
 ---
 
