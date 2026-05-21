@@ -1,4 +1,3 @@
-````md id="c9w4rt"
 # Contributing to NEXUS
 
 Thank you for contributing to NEXUS.
@@ -23,20 +22,14 @@ NEXUS prioritizes:
 - Optional AI augmentation
 - Reliability over feature count
 
-The goal is NOT to become:
-- a generic productivity dashboard
-- a bloated analytics platform
-- a chatbot wrapper
-- a “life operating system”
 
-NEXUS should remain:
-```text
-focused
-minimal
-intelligent
-modular
-operational
-````
+The default implementation prioritizes:
+
+- focused
+- clear
+- modular
+- operational
+- low-noise
 
 Every contribution should improve contextual awareness without increasing unnecessary complexity.
 
@@ -70,27 +63,31 @@ React Frontend
 
 ```text
 nexus/
+├── backend/
+│   └── app/
+│       ├── routers/
+│       │   └── dashboard.py
+│       ├── config.py
+│       ├── db.py
+│       ├── mcp_client.py
+│       └── ollama_client.py
+│
+├── frontend/
+│   └── src/
+│       ├── components/
+│       ├── hooks/
+│       ├── App.tsx
+│       └── types.ts
+│
 ├── mcp-servers/
 │   ├── github/
 │   ├── leetcode/
 │   └── fitness/
 │
-├── backend/
-│   └── app/
-│       ├── config.py
-│       ├── db.py
-│       ├── mcp_client.py
-│       ├── ollama_client.py
-│       └── routers/
-│           └── dashboard.py
-│
-├── frontend/
-│   └── src/
-│
-├── data/
-├── Makefile
+├── docs/
+├── CONTRIBUTING.md
 ├── README.md
-└── .env.example
+└── Makefile
 ```
 
 ---
@@ -100,7 +97,7 @@ nexus/
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/nexus.git
+git clone https://github.com/Acestar21/nexus.git
 cd nexus
 ```
 
@@ -282,6 +279,17 @@ Example serialized snapshot:
 
 ---
 
+## Provider Flexibility
+
+Providers can be implemented in any language with MCP SDK support as long as they expose compatible MCP tools and can be orchestrated by the backend.
+
+The provider contract described above reflects the default implementation pattern used throughout NEXUS for consistency and maintainability.
+
+Alternative provider implementations and architectures are completely acceptable for personal forks and standalone integrations.
+
+However, contributions intended for the main NEXUS repository should follow the established provider contract and project structure to preserve consistency across the ecosystem.
+---
+
 # Reliability Expectations
 
 NEXUS is designed around graceful degradation.
@@ -312,12 +320,12 @@ The UI should remain:
 * low-noise
 * fast to scan
 
-Avoid:
+The reference implementation prioritizes:
+- fast scanability
+- operational clarity
+- focused telemetry presentation
 
-* excessive charts
-* widget overload
-* analytics clutter
-* unnecessary animations
+Contributors are encouraged to experiment with alternative visual approaches where appropriate.
 
 ---
 
@@ -473,7 +481,7 @@ High-value contributions:
 * new MCP providers
 * reliability improvements
 * onboarding improvements
-* historical intelligence
+* historical telemetry analysis
 * trend analysis
 * provider health systems
 * documentation improvements
@@ -488,31 +496,30 @@ Lower-value contributions:
 
 ---
 
-# Long-Term Direction
+# Design Direction
 
-NEXUS is evolving toward:
+The default NEXUS implementation prioritizes:
 
-```text
-developer telemetry
-+
-behavioral intelligence
-+
-local-first infrastructure
-+
-modular provider ecosystem
-```
+- local-first execution
+- modular provider boundaries
+- operational clarity
+- resilient orchestration
+- focused telemetry presentation
 
-The project should continue moving toward:
+Areas of future exploration may include:
 
-* meaningful contextual awareness
-* historical intelligence
-* resilient local tooling
+- richer historical analysis
+- improved operational summarization
+- provider ecosystem expansion
+- stronger reliability tooling
+- better operational awareness
 
-NOT:
+The project intentionally avoids:
+- feature-heavy productivity clutter
+- generic AI chat interfaces
+- unnecessary dashboard complexity
+- cloud-dependent architecture
 
-* feature-heavy productivity clutter
-
----
 
 # Questions / Discussions
 
@@ -527,7 +534,5 @@ open a discussion or issue before implementing large changes.
 
 ---
 
-Built and maintained by Kushal.
+Built and maintained by Kushal Singh Kushwaha.
 
-```
-```

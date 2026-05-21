@@ -19,7 +19,7 @@ Most productivity tools increase cognitive load by turning your life into a wall
 
 NEXUS takes the opposite approach:
 
-- Minimal operational UI
+- Focused operational UI
 - Contextual awareness over analytics clutter
 - Local-first execution
 - Modular provider architecture
@@ -120,7 +120,7 @@ NEXUS treats AI as an optional contextual intelligence layer rather than a motiv
 The briefing system is designed to generate concise operational summaries from aggregated developer telemetry using locally hosted LLMs via Ollama.
 
 The focus is:
-- behavioral signals
+- operational signals
 - workload balance
 - streak awareness
 - operational context
@@ -146,7 +146,7 @@ NEXUS uses MCP providers to isolate data sources into independent modules commun
 This architecture allows:
 
 - Provider isolation
-- Safer local orchestration
+- Isolated provider execution
 - Easier extensibility
 - Language-agnostic integrations
 - Graceful degradation between providers
@@ -280,6 +280,28 @@ http://localhost:8000
 
 ---
 
+### GitHub Token Setup (Optional)
+
+A GitHub token is only required if you want private contribution activity included in dashboard metrics.
+
+Create a classic Personal Access Token with:
+
+- `read:user`
+- `repo`
+
+GitHub Settings:
+```text
+Settings → Developer Settings → Personal Access Tokens → Tokens (classic)
+```
+
+Then add it to:
+
+```env
+GITHUB_TOKEN=your_token_here
+```
+
+---
+
 # Project Structure
 
 ```text
@@ -362,4 +384,4 @@ MIT License
 
 ---
 
-Built and maintained by Kushal.
+Built and maintained by Kushal Singh Kushwaha.
