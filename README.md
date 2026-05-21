@@ -280,9 +280,10 @@ http://localhost:8000
 
 ---
 
-### GitHub Token Setup (Optional)
+### GitHub Token Setup 
 
-A GitHub token is only required if you want private contribution activity included in dashboard metrics.
+A GitHub token is required for private contribution activity to be included in dashboard metrics.
+The token is only used to access contribution data associated with the authenticated GitHub account.
 
 Create a classic Personal Access Token with:
 
