@@ -55,35 +55,45 @@ async def safe_call_tool(server: str, tool: str) -> tuple[dict | None, str | Non
 
 @router.get("/summary")
 async def get_summary():
-    github_data, github_err = await safe_call_tool("github", "get_github_activity")
-    fitness_data, fitness_err = await safe_call_tool("fitness", "get_fitness_activity")
-    leetcode_data, leetcode_err = await safe_call_tool("leetcode", "get_leetcode_activity")
+    try:
+        github_data, github_err = await safe_call_tool("github", "get_github_activity")
+        fitness_data, fitness_err = await safe_call_tool("fitness", "get_fitness_activity")
+        leetcode_data, leetcode_err = await safe_call_tool("leetcode", "get_leetcode_activity")
 
-    if github_data:
-        save_snapshot("github", github_data)
-    if fitness_data:
-        save_snapshot("fitness", fitness_data)
-    if leetcode_data:
-        save_snapshot("leetcode", leetcode_data)
+        if github_data:
+            save_snapshot("github", github_data)
+        if fitness_data:
+            save_snapshot("fitness", fitness_data)
+        if leetcode_data:
+            save_snapshot("leetcode", leetcode_data)
 
-    brief = None
-    if settings.enable_ai_brief and github_data and fitness_data and leetcode_data:
-        brief = get_todays_brief()
-        if not brief:
-            brief = await generate_brief(github_data, fitness_data, leetcode_data)
-            save_brief(brief)
+        brief = None
+        if settings.enable_ai_brief and github_data and fitness_data and leetcode_data:
+            try:
+                brief = get_todays_brief()
+                if not brief:
+                    brief = await generate_brief(github_data, fitness_data, leetcode_data)
+                    save_brief(brief)
+            except Exception as e:
+                logger.warning(f"Brief generation failed: {e}")
+                brief = None
 
-    return {
-        "github": github_data,
-        "fitness": fitness_data,
-        "leetcode": leetcode_data,
-        "brief": brief,
-        "errors": {
-            "github": github_err,
-            "fitness": fitness_err,
-            "leetcode": leetcode_err,
+        return {
+            "github": github_data,
+            "fitness": fitness_data,
+            "leetcode": leetcode_data,
+            "brief": brief,
+            "errors": {
+                "github": github_err,
+                "fitness": fitness_err,
+                "leetcode": leetcode_err,
+            }
         }
-    }
+    except Exception as e:
+        logger.error(f"Error generating summary: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.post("/log-workout")
 async def log_workout(payload: WorkoutLog):
     try:

@@ -266,6 +266,50 @@ http://localhost:8000
 
 ---
 
+## Running NEXUS
+
+### Quick Start
+
+After completing setup and configuring `.env`:
+
+#### Windows
+```bash
+start.bat
+```
+
+#### Linux / macOS
+```bash
+chmod +x start.sh
+./start.sh
+```
+
+This launches:
+- FastAPI backend
+- React frontend
+- local MCP providers
+
+and opens the dashboard locally.
+
+---
+
+### Manual Development Mode
+
+If developing or debugging:
+
+#### Backend
+```bash
+cd backend
+uvicorn app.main:app --reload
+```
+
+#### Frontend
+```bash
+cd frontend
+npm run dev
+```
+
+---
+
 # Environment Variables
 
 | Variable | Required | Description |

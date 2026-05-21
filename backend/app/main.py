@@ -1,9 +1,9 @@
 import logging
+import httpx
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from app.config import settings
 from app.routers import dashboard
 from app.db import init_db
@@ -15,14 +15,32 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+
+async def check_ollama_health():
+    if not settings.enable_ai_brief:
+        logger.info("AI brief disabled, skipping Ollama check")
+        return True
+    
+    try:
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            response = await client.get(f"{settings.ollama_host}/api/tags")
+            if response.status_code == 200:
+                logger.info("✓ Ollama is running and healthy")
+                return True
+    except Exception as e:
+        logger.warning(f"⚠ Ollama not detected: {e}")
+        logger.warning(f"  AI brief is enabled but Ollama is not available at {settings.ollama_host}")
+        logger.warning(f"  Either start Ollama or set ENABLE_AI_BRIEF=false")
+        return False
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Starting MCP Dashboard backend...")
-    logger.info(f"ollama_host: {settings.ollama_host}")
-    logger.info(f"ollama_model: {settings.ollama_model}")
+    logger.info("Starting NEXUS...")
+    await check_ollama_health()
     init_db()
     yield
-    logger.info("Shutting down MCP Dashboard backend...")
+    logger.info("Shutting down NEXUS")
 
 app = FastAPI(
     title = "Nexus Dashboard API",
