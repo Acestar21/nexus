@@ -242,17 +242,59 @@ Fill in your environment variables.
 
 ## 3. Install Dependencies
 
+### Backend
+
 ```bash
-make install
+python -m venv .venv
+```
+
+#### Windows
+```bash
+.venv\Scripts\activate
+```
+
+#### Linux / macOS
+```bash
+source .venv/bin/activate
+```
+
+Install Python dependencies:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ---
 
-## 4. Start Development Environment
+### Frontend
 
 ```bash
-make dev
+cd frontend
+npm install
+cd ..
 ```
+
+---
+
+## 4. Running NEXUS
+
+### Windows
+
+```bash
+start.bat
+```
+
+### Linux / macOS
+
+```bash
+chmod +x start.sh
+./start.sh
+```
+
+This launches:
+- FastAPI backend
+- React frontend
+- local MCP providers
 
 Frontend:
 ```text
@@ -266,46 +308,33 @@ http://localhost:8000
 
 ---
 
-## Running NEXUS
+## Manual Development Mode
 
-### Quick Start
+If developing or debugging manually:
 
-After completing setup and configuring `.env`:
+### Backend
 
-#### Windows
-```bash
-start.bat
-```
-
-#### Linux / macOS
-```bash
-chmod +x start.sh
-./start.sh
-```
-
-This launches:
-- FastAPI backend
-- React frontend
-- local MCP providers
-
-and opens the dashboard locally.
-
----
-
-### Manual Development Mode
-
-If developing or debugging:
-
-#### Backend
 ```bash
 cd backend
 uvicorn app.main:app --reload
 ```
 
-#### Frontend
+### Frontend
+
 ```bash
 cd frontend
 npm run dev
+```
+
+---
+
+## Optional Makefile Shortcuts
+
+GNU Make users may also use:
+
+```bash
+make install
+make dev
 ```
 
 ---
