@@ -31,8 +31,12 @@ export function QuickActions({ onRefresh, onRefreshBrief, loading }: QuickAction
         <button className="action-btn" onClick={onRefreshBrief} disabled={loading}>
           REFRESH BRIEF
         </button>
-        <button className="action-btn action-btn--secondary" onClick={onRefresh} disabled={loading}>
-          {loading ? "LOADING..." : "REFRESH DATA"}
+        <button 
+          className="action-btn action-btn--secondary" 
+          onClick={onRefresh} 
+          disabled={loading}
+        >
+          {loading ? "⟳ REFRESHING..." : "REFRESH DATA"}
         </button>
       </div>
     </div>

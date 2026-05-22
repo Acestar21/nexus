@@ -254,3 +254,57 @@ a.action-btn {
   text-decoration: none;
   text-align: center;
 }
+
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  animation: spin 1s linear infinite;
+}
+
+/* Provider status */
+.provider-status {
+  font-size: 11px;
+  padding: 8px 12px;
+  border-left: 2px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.status-name {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.status-indicator {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.status-indicator.online {
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+.status-indicator.offline {
+  color: var(--error);
+  border-left-color: var(--error);
+}
+
+.status-meta {
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.status-error {
+  color: var(--error);
+  margin-top: 4px;
+  word-break: break-word;
+}

@@ -29,6 +29,23 @@ export interface DashboardData {
     fitness: string | null;
     leetcode: string | null;
   };
+  provider_status: {
+    github: {
+      online: boolean;
+      last_fetched: string | null;
+      error: string | null;
+    };
+    fitness: {
+      online: boolean;
+      last_fetched: string | null;
+      error: string | null;
+    };
+    leetcode: {
+      online: boolean;
+      last_fetched: string | null;
+      error: string | null;
+    };
+  };
 }
 
 export interface LeetCodeActivity {

@@ -4,6 +4,7 @@ import { MetricCard } from "./components/MetricCard";
 import { Brief } from "./components/Brief";
 import { QuickActions } from "./components/QuickActions";
 import { QuickLinks } from "./components/QuickLinks";
+import { ProviderStatus } from "./components/ProviderStatus";
 
 function App() {
   const { data, loading, error, refresh, refreshBrief } = useDashboard();
@@ -61,6 +62,12 @@ function App() {
 
           <div className="metrics-section">
             <span className="section-label">// GITHUB</span>
+              <ProviderStatus
+                name="GitHub"
+                online={data.provider_status.github.online}
+                last_fetched={data.provider_status.github.last_fetched}
+                error={data.provider_status.github.error}
+              />
             {data.github ? (
               <div className="metrics-row">
                 <MetricCard
@@ -82,6 +89,12 @@ function App() {
 
           <div className="metrics-section">
             <span className="section-label">// LEETCODE</span>
+              <ProviderStatus
+                name="LeetCode"
+                online={data.provider_status.leetcode.online}
+                last_fetched={data.provider_status.leetcode.last_fetched}
+                error={data.provider_status.leetcode.error}
+              />
             {visibleErrors.leetcode && (
               <div className="error-banner">LEETCODE: {data?.errors.leetcode}</div>
             )}
@@ -112,6 +125,12 @@ function App() {
 
           <div className="metrics-section">
             <span className="section-label">// FITNESS</span>
+            <ProviderStatus
+              name="Fitness"
+              online={data.provider_status.fitness.online}
+              last_fetched={data.provider_status.fitness.last_fetched}
+              error={data.provider_status.fitness.error}
+            />
             {visibleErrors.fitness && (
               <div className="error-banner">FITNESS: {data?.errors.fitness}</div>
             )}

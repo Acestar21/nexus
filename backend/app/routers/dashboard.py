@@ -87,6 +87,23 @@ async def get_summary():
                 "github": github_err,
                 "fitness": fitness_err,
                 "leetcode": leetcode_err,
+            },
+            "provider_status": {
+                "github": {
+                    "online": github_data is not None,
+                    "last_fetched": github_data["captured_at"] if github_data else None,
+                    "error": github_err
+                },
+                "fitness": {
+                    "online": fitness_data is not None,
+                    "last_fetched": fitness_data["captured_at"] if fitness_data else None,
+                    "error": fitness_err
+                },
+                "leetcode": {
+                    "online": leetcode_data is not None,
+                    "last_fetched": leetcode_data["captured_at"] if leetcode_data else None,
+                    "error": leetcode_err
+                }
             }
         }
     except Exception as e:
