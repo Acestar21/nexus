@@ -11,18 +11,14 @@ for /f "tokens=5" %%a in ('netstat -aon ^| find ":5173" ^| find "LISTENING"') do
 timeout /t 1 /nobreak
 
 REM Start backend
-cd backend
 echo [BACKEND] Starting FastAPI server...
-start "NEXUS Backend" cmd /k "uvicorn app.main:app --reload --port 8000"
-cd ..
+start "NEXUS Backend" cmd /k "cd backend && ..\.venv\Scripts\activate && uvicorn app.main:app --reload --port 8000"
 
 timeout /t 3 /nobreak
 
 REM Start frontend
-cd frontend
 echo [FRONTEND] Starting Vite dev server...
-start "NEXUS Frontend" cmd /k "npm run dev"
-cd ..
+start "NEXUS Frontend" cmd /k "cd frontend && npm run dev"
 
 echo.
 echo ============================================
