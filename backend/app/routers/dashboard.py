@@ -44,9 +44,12 @@ def save_snapshot(source: str, data: dict) -> None:
         )
 
 
+
 async def safe_call_tool(server: str, tool: str) -> tuple[dict | None, str | None]:
     try:
         result = await call_tool(server, tool)
+        if isinstance(result, str):
+            result = json.loads(result)
         return result, None
     except Exception as e:
         logger.error(f"MCP server '{server}' failed: {e}")
